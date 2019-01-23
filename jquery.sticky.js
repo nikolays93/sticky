@@ -34,7 +34,8 @@
       getWidthFrom: '',
       widthFromWrapper: true, // works only when .getWidthFrom is empty
       responsiveWidth: false,
-      zIndex: 'inherit'
+      zIndex: 'inherit',
+      height: 0,
     },
     $window = $(window),
     $document = $(document),
@@ -52,7 +53,7 @@
           etse = elementTop - s.topSpacing - extra;
 
         //update height in case of dynamic content
-        s.stickyWrapper.css('height', s.stickyElement.outerHeight());
+        if (!s.height || s.currentTop !== null) s.stickyWrapper.css('height', s.stickyElement.outerHeight() );
 
         if (scrollTop <= etse) {
           if (s.currentTop !== null) {
@@ -64,6 +65,7 @@
                 'z-index': ''
               });
             s.stickyElement.parent().removeClass(s.className);
+            if( s.height ) s.stickyWrapper.css('height', s.height);
             s.stickyElement.trigger('sticky-end', [s]);
             s.currentTop = null;
           }
